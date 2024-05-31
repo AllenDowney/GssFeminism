@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Extract data for Elements of Data Science &#8212; GSS Feminism</title>
+    <title>Data Inventory &#8212; GSS Feminism</title>
   
   
   
@@ -171,7 +171,7 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Extract data for Elements of Data Science</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Inventory</a></li>
 </ul>
 
     </div>
@@ -325,7 +325,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Extract data for Elements of Data Science</h1>
+    <h1>Data Inventory</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -335,7 +335,16 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inventory">Inventory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#responses">Responses</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-respondents">All respondents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#female-respondents">Female respondents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#male-respondents">Male respondents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#young-males">Young males</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-extracts">Write extracts</a></li>
 </ul>
             </nav>
@@ -348,8 +357,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="extract-data-for-elements-of-data-science">
-<h1>Extract data for Elements of Data Science<a class="headerlink" href="#extract-data-for-elements-of-data-science" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="data-inventory">
+<h1>Data Inventory<a class="headerlink" href="#data-inventory" title="Link to this heading">#</a></h1>
 <p>Allen Downey</p>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/MIT_License">MIT License</a></p>
 <div class="cell docutils container">
@@ -361,8 +370,11 @@ document.write(`
 </div>
 </div>
 </div>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h2>
+<p>GSS released 2022_r3a in April 2024.</p>
 <p>Download the Stata data from <a class="reference external" href="https://gss.norc.org/get-the-data/stata">https://gss.norc.org/get-the-data/stata</a></p>
-<p>Move to data/raw and unzip</p>
+<p>Move to nb directory and unzip</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>ls<span class="w"> </span>GSS_stata/
@@ -384,72 +396,73 @@ document.write(`
 </div>
 </div>
 </div>
+<p>The following subset includes all of the <code class="docutils literal notranslate"><span class="pre">fe</span></code> variables that were asked in more than a few years, the standard set of demographic variables, and a few related topics we might explore at some point.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
     <span class="p">[</span>
         <span class="s1">&#39;abany&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;abdefect&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;abhlth&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;abnomore&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;abpoor&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;abrape&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;absingle&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;acqntsex&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;age&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;attend&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;ballot&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;cohort&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;degree&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;discaffm&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;discaffw&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;divorce&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;educ&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fair&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fechld&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fefam&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fehelp&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fehire&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fehome&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fepol&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fepres&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fepresch&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fework&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;frndsex&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;fund&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;hapmar&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;happy&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;health&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;helpful&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;id&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;life&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;matesex&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;othersex&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;paidsex&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;partyid&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;pikupsex&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;polviews&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;race&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;realinc&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;realrinc&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;region&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;relig&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;reliten&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;rincome&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;sex&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;sexbirth&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;sexfreq&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;sexnow&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;sexornt&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;sexsex&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;sexsex5&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;spanking&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;srcbelt&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;trust&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;wtssall&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;wtssps&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;year&#39;</span>
+        <span class="s1">&#39;abdefect&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abhlth&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abnomore&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abpoor&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;abrape&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;absingle&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;acqntsex&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;age&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;attend&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;ballot&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cohort&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;degree&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;discaffm&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;discaffw&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;divorce&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;educ&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fair&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fechld&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fefam&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fehelp&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fehire&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fehome&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fepol&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fepres&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fepresch&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fework&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;frndsex&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fund&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;hapmar&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;happy&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;health&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;helpful&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;life&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;matesex&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;othersex&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;paidsex&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;partyid&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pikupsex&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;polviews&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;race&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;realinc&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;realrinc&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;region&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;relig&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;reliten&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rincome&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sex&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sexbirth&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sexfreq&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sexnow&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sexornt&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sexsex&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sexsex5&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;spanking&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;srcbelt&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;trust&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;wtssall&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;wtssps&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;year&#39;</span>
     <span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
@@ -672,30 +685,52 @@ Name: wtssall, dtype: float64
 <p>5 rows × 61 columns</p>
 </div></div></div>
 </div>
+</section>
 <section id="inventory">
 <h2>Inventory<a class="headerlink" href="#inventory" title="Link to this heading">#</a></h2>
-<p>fechld</p>
-<p>A. A working mother can establish just as warm and secure a relationship with her children as a mother who does not work.</p>
-<p>fefam</p>
-<p>D. It is much better for everyone involved if the man is the achiever outside the home and the woman takes care of the home and family.</p>
-<p>fehelp</p>
-<p>B. It is more important for a wife to help her husband’s career than to have one herself.</p>
-<p>fehire</p>
-<p>Because of past discrimination, employers should make special efforts to hire and promote qualified women.</p>
-<p>fehome</p>
-<p>Women should take care of running their homes and leave running the country up to men.</p>
-<p>fejobaff</p>
-<p>Some people say that because of past discrimination, women should be given preference in hiring and promotion. Others say that such preference in hiring and promotion of women is wrong because it discriminates against men. What about your opinion - are you for or against preferential hiring and promotion of women?
+<p>Here are the 10 <code class="docutils literal notranslate"><span class="pre">fe</span></code> variables and the text of the questions.</p>
+<p><code class="docutils literal notranslate"><span class="pre">fechld</span></code></p>
+<blockquote>
+<div><p>A. A working mother can establish just as warm and secure a relationship with her children as a mother who does not work.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fefam</span></code></p>
+<blockquote>
+<div><p>D. It is much better for everyone involved if the man is the achiever outside the home and the woman takes care of the home and family.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fehelp</span></code></p>
+<blockquote>
+<div><p>B. It is more important for a wife to help her husband’s career than to have one herself.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fehire</span></code></p>
+<blockquote>
+<div><p>Because of past discrimination, employers should make special efforts to hire and promote qualified women.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fehome</span></code></p>
+<blockquote>
+<div><p>Women should take care of running their homes and leave running the country up to men.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fejobaff</span></code></p>
+<blockquote>
+<div><p>Some people say that because of past discrimination, women should be given preference in hiring and promotion. Others say that such preference in hiring and promotion of women is wrong because it discriminates against men. What about your opinion - are you for or against preferential hiring and promotion of women?
 IF FOR:Do you favor preference in hiring and promotion strongly or not strongly?
 IF AGAINST:Do you oppose preference in hiring and promotion strongly or not strongly?</p>
-<p>fepol</p>
-<p>A. Tell me if you agree or disagree with this statement:  Most men are better suited emotionally for politics than are most women.</p>
-<p>fepres</p>
-<p>If your party nominated a woman for President, would you vote for her if she were qualified for the job?</p>
-<p>fepresch</p>
-<p>C. A preschool child is likely to suffer if his or her mother works.</p>
-<p>fework</p>
-<p>Do you approve or disapprove of a married woman earning money in business or industry if she has a husband capable of supporting her?</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fepol</span></code></p>
+<blockquote>
+<div><p>A. Tell me if you agree or disagree with this statement:  Most men are better suited emotionally for politics than are most women.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fepres</span></code></p>
+<blockquote>
+<div><p>If your party nominated a woman for President, would you vote for her if she were qualified for the job?</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fepresch</span></code></p>
+<blockquote>
+<div><p>C. A preschool child is likely to suffer if his or her mother works.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fework</span></code></p>
+<blockquote>
+<div><p>Do you approve or disapprove of a married woman earning money in business or industry if she has a husband capable of supporting her?</p>
+</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fe_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gss</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;fe&#39;</span><span class="p">)]</span>
@@ -730,15 +765,24 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 </div>
+</section>
+<section id="id1">
+<h2><a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">decorate</span>
 
 <span class="n">grouped</span> <span class="o">=</span> <span class="n">gss</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>
+<span class="n">intervals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;last&#39;</span><span class="p">,</span> <span class="s1">&#39;# years&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="n">grouped</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">grouped</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="n">counts</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+    <span class="n">nonzero</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">n_years</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nonzero</span><span class="p">)</span>
+    <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">nonzero</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">nonzero</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">intervals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">n_years</span>
     <span class="n">decorate</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -756,6 +800,104 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <img alt="_images/8a4a5b6dc6246a80c3142b06f65e1429b3f634a6f5bf4011a8de46ca6146e1bc.png" src="_images/8a4a5b6dc6246a80c3142b06f65e1429b3f634a6f5bf4011a8de46ca6146e1bc.png" />
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intervals</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first</th>
+      <th>last</th>
+      <th># years</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>fechld</th>
+      <td>1977</td>
+      <td>2022</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>fefam</th>
+      <td>1977</td>
+      <td>2022</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>fehelp</th>
+      <td>1977</td>
+      <td>1998</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>fehire</th>
+      <td>1996</td>
+      <td>2022</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>fehome</th>
+      <td>1974</td>
+      <td>1998</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>fejobaff</th>
+      <td>1996</td>
+      <td>2022</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>fepol</th>
+      <td>1974</td>
+      <td>2022</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>fepres</th>
+      <td>1972</td>
+      <td>2010</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>fepresch</th>
+      <td>1977</td>
+      <td>2022</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>fework</th>
+      <td>1972</td>
+      <td>1998</td>
+      <td>17</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="responses">
+<h2>Responses<a class="headerlink" href="#responses" title="Link to this heading">#</a></h2>
 <p>Most are on a four point scale:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>	<span class="n">STRONGLY</span> <span class="n">AGREE</span>	
 <span class="mi">2</span>	<span class="n">AGREE</span>	
@@ -771,7 +913,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <span class="mi">5</span>	<span class="n">STRONGLY</span> <span class="n">DISAGREE</span>
 </pre></div>
 </div>
-<p>Some are on a two-point scale</p>
+<p>Some are on a two-point scale.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">values</span>
@@ -850,16 +992,6 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">four_point</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fechld&#39;</span><span class="p">,</span> <span class="s1">&#39;fefam&#39;</span><span class="p">,</span> <span class="s1">&#39;fehelp&#39;</span><span class="p">,</span> <span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="s1">&#39;fepresch&#39;</span><span class="p">]</span> 
-<span class="n">five_point</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fehire&#39;</span><span class="p">]</span>
-
-<span class="n">two_point</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fepol&#39;</span><span class="p">,</span> <span class="s1">&#39;fehome&#39;</span><span class="p">,</span> <span class="s1">&#39;fework&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;fepres&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>fepol and fehome: 1 agree, 2 disagree</p>
 <p>fework: 1 approve, 2 disapprove</p>
 <p>fepres: 1 yes 2 no 5 would not vote – let’s replace 5 with no</p>
@@ -880,19 +1012,20 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
+<p>For each variable, I’ll select “agree” and “strongly agree”, except for <code class="docutils literal notranslate"><span class="pre">fework</span></code>, where I’ve selected “approve”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agree_responses</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;fechld&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="s1">&#39;fechld&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
     <span class="s1">&#39;fefam&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
     <span class="s1">&#39;fehelp&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
     <span class="s1">&#39;fehire&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
     <span class="s1">&#39;fehome&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-    <span class="s1">&#39;fejobaff&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="s1">&#39;fejobaff&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
     <span class="s1">&#39;fepol&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-    <span class="s1">&#39;fepres&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="s1">&#39;fepres&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="s1">&#39;fepresch&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-    <span class="s1">&#39;fework&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="s1">&#39;fework&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -911,6 +1044,12 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
+<section id="all-respondents">
+<h3>All respondents<a class="headerlink" href="#all-respondents" title="Link to this heading">#</a></h3>
+<p>Note that these results have not yet been corrected for stratified sampling, so think of this as an inventory of the data, not inferences about the population.</p>
+<ul class="simple">
+<li><p>Last two points of <code class="docutils literal notranslate"><span class="pre">fehire</span></code> have gone wonky – I’ve seen things like this in the 2021 and 2022 data. Not sure what the issue is.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
@@ -920,40 +1059,21 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/aa6a72a443f98e5ef2be6b5854c65364d61603d405e7ac45886e5aa301aaea58.png" src="_images/aa6a72a443f98e5ef2be6b5854c65364d61603d405e7ac45886e5aa301aaea58.png" />
+<img alt="_images/63764164469ab9b0fdf29a41b86ac485f056229406ad1a4f59b9d1c39ac1742b.png" src="_images/63764164469ab9b0fdf29a41b86ac485f056229406ad1a4f59b9d1c39ac1742b.png" />
 <img alt="_images/6202d4451f76a3d785e17e823afe64489fc605156881fdb25a038cce01d77dc3.png" src="_images/6202d4451f76a3d785e17e823afe64489fc605156881fdb25a038cce01d77dc3.png" />
 <img alt="_images/a0c3b27e31aed3f9c32160057b6691de343d97191aafcc512963a3178e34135b.png" src="_images/a0c3b27e31aed3f9c32160057b6691de343d97191aafcc512963a3178e34135b.png" />
 <img alt="_images/bc3bd352cab66571ba2d0c60e925e31ff9086b9481cf4cacb1e2ed62301768b7.png" src="_images/bc3bd352cab66571ba2d0c60e925e31ff9086b9481cf4cacb1e2ed62301768b7.png" />
 <img alt="_images/0eaa0332f691cc830be34fa567f7a5401362f45ba5c8de9a7f0e2beabf553553.png" src="_images/0eaa0332f691cc830be34fa567f7a5401362f45ba5c8de9a7f0e2beabf553553.png" />
-<img alt="_images/b4254d057dee70b50a94c45a68e6fa3a4a05005445675a445dd082f8d851b275.png" src="_images/b4254d057dee70b50a94c45a68e6fa3a4a05005445675a445dd082f8d851b275.png" />
+<img alt="_images/9714334efb0099dd3e9d23c11d06623db57cb2531a62dbde15b0d1dc35a29623.png" src="_images/9714334efb0099dd3e9d23c11d06623db57cb2531a62dbde15b0d1dc35a29623.png" />
 <img alt="_images/586095b062d080f621299d0a7929e48c106152c6d8b3005e92709bdf1187ec6c.png" src="_images/586095b062d080f621299d0a7929e48c106152c6d8b3005e92709bdf1187ec6c.png" />
-<img alt="_images/dfef61c9a02798e40da18438935309757e6f64fadefc33dc4cee02d933ad061e.png" src="_images/dfef61c9a02798e40da18438935309757e6f64fadefc33dc4cee02d933ad061e.png" />
+<img alt="_images/250f3d736d7f921083fdbcea7e2f93d74b3d677011beb340b3fb9ad36a05074e.png" src="_images/250f3d736d7f921083fdbcea7e2f93d74b3d677011beb340b3fb9ad36a05074e.png" />
 <img alt="_images/7e99d873f572d40637bb402342be5c54d2f1953321cc7ab939f2cb35e2cbd012.png" src="_images/7e99d873f572d40637bb402342be5c54d2f1953321cc7ab939f2cb35e2cbd012.png" />
-<img alt="_images/9711d2f199a1dbdb0b960e4c3f1c1ba82bd7f70da418598c2f30852a920d8e92.png" src="_images/9711d2f199a1dbdb0b960e4c3f1c1ba82bd7f70da418598c2f30852a920d8e92.png" />
+<img alt="_images/e9411b575fe6c78f7736218e157bfe9fbde119eb5818531a55371db4c021ed8e.png" src="_images/e9411b575fe6c78f7736218e157bfe9fbde119eb5818531a55371db4c021ed8e.png" />
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">male</span> <span class="o">=</span> <span class="n">gss</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;sex == 1&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="n">plot_series</span><span class="p">(</span><span class="n">male</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Male respondents&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/0fc8d84191fb83ed347b4ad8e9da0a4a1bc19286cd8aa60bb991757e2c8e4c83.png" src="_images/0fc8d84191fb83ed347b4ad8e9da0a4a1bc19286cd8aa60bb991757e2c8e4c83.png" />
-<img alt="_images/2919ccaed79b4fdc4d4402028c78e55e54e79daa62dcea9ce64526a6df8b89d1.png" src="_images/2919ccaed79b4fdc4d4402028c78e55e54e79daa62dcea9ce64526a6df8b89d1.png" />
-<img alt="_images/ea80eb75052137275ae91019dd50158dac18ae0e4121362bc6326ba0cdf7445e.png" src="_images/ea80eb75052137275ae91019dd50158dac18ae0e4121362bc6326ba0cdf7445e.png" />
-<img alt="_images/57f6c0dc934f5bad1b021872e38ed4edd1db490f334298ec0a5bfb8fce0d25af.png" src="_images/57f6c0dc934f5bad1b021872e38ed4edd1db490f334298ec0a5bfb8fce0d25af.png" />
-<img alt="_images/14c667065761bded732f3e1d6a452df55560aa2119a413304995176b17bd3a51.png" src="_images/14c667065761bded732f3e1d6a452df55560aa2119a413304995176b17bd3a51.png" />
-<img alt="_images/9110310f04b9f7add526ec25a69779ca3a50c8b99108f9e97f8f1e64097c5b9c.png" src="_images/9110310f04b9f7add526ec25a69779ca3a50c8b99108f9e97f8f1e64097c5b9c.png" />
-<img alt="_images/a0f89c265837d7a3e2da4083387ec7825ec0ac17147a425122decd7b80677ab8.png" src="_images/a0f89c265837d7a3e2da4083387ec7825ec0ac17147a425122decd7b80677ab8.png" />
-<img alt="_images/d1cb21894de2fc1ea8aa2c46adbac62cf612cb0849b84555a79e7a094405513b.png" src="_images/d1cb21894de2fc1ea8aa2c46adbac62cf612cb0849b84555a79e7a094405513b.png" />
-<img alt="_images/ca0161217e1dfa95806bf9c2d26baecb3b21dcd000acf4f9b9c1080fded3fe9e.png" src="_images/ca0161217e1dfa95806bf9c2d26baecb3b21dcd000acf4f9b9c1080fded3fe9e.png" />
-<img alt="_images/2de8e0f84093081e5c0a8231580e3d919e869a0bf10c37663584f6865ab3ad82.png" src="_images/2de8e0f84093081e5c0a8231580e3d919e869a0bf10c37663584f6865ab3ad82.png" />
-</div>
-</div>
+</section>
+<section id="female-respondents">
+<h3>Female respondents<a class="headerlink" href="#female-respondents" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">female</span> <span class="o">=</span> <span class="n">gss</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;sex == 2&#39;</span><span class="p">)</span>
@@ -964,18 +1084,50 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2d1fde575b3b4bfe6cf9637769b9d655080c644a1c311853e08a8360924f784f.png" src="_images/2d1fde575b3b4bfe6cf9637769b9d655080c644a1c311853e08a8360924f784f.png" />
-<img alt="_images/e68e15141fc281c51c423bb061338f8b6d31d50189c8e322f6041729efd1ec72.png" src="_images/e68e15141fc281c51c423bb061338f8b6d31d50189c8e322f6041729efd1ec72.png" />
-<img alt="_images/1dbef1ca6eb678f742d7329cc9b6f4d294910f0d1fce33c2ee61a3921fe23bfb.png" src="_images/1dbef1ca6eb678f742d7329cc9b6f4d294910f0d1fce33c2ee61a3921fe23bfb.png" />
-<img alt="_images/7ab72661f621546e05d975f14ea098238f262f8068c9a7f93ad6a3d45f160dd2.png" src="_images/7ab72661f621546e05d975f14ea098238f262f8068c9a7f93ad6a3d45f160dd2.png" />
-<img alt="_images/969f0f8690efb39ab771c804839cbd6c618a31c3f882689593e03a99179603fe.png" src="_images/969f0f8690efb39ab771c804839cbd6c618a31c3f882689593e03a99179603fe.png" />
-<img alt="_images/58cd9051f346315d32db3b214bfa1c0e893e3055739277a0b9e0bec276361a93.png" src="_images/58cd9051f346315d32db3b214bfa1c0e893e3055739277a0b9e0bec276361a93.png" />
-<img alt="_images/cd03196076ddbc794e6d0207e9679cb5e15b0c1635b11e0d3fe922fb4fc5dd4d.png" src="_images/cd03196076ddbc794e6d0207e9679cb5e15b0c1635b11e0d3fe922fb4fc5dd4d.png" />
-<img alt="_images/9fcf91b771a19747fe492b83f75b560aea98f6a1ae737f94350a1d056bcd210a.png" src="_images/9fcf91b771a19747fe492b83f75b560aea98f6a1ae737f94350a1d056bcd210a.png" />
-<img alt="_images/38d88de8c72ed7ce566f180864a16ff488bf75b46d91ae29b1265d40855d5f7a.png" src="_images/38d88de8c72ed7ce566f180864a16ff488bf75b46d91ae29b1265d40855d5f7a.png" />
-<img alt="_images/55f7dd3a522bd59c81d8322473464efadae95e8625bfeabbf81b6534aef32fbf.png" src="_images/55f7dd3a522bd59c81d8322473464efadae95e8625bfeabbf81b6534aef32fbf.png" />
+<img alt="_images/816ee6a1f69ea000776511967de951a76ef6ac54b0d49ad9a8d593f6aaa909e2.png" src="_images/816ee6a1f69ea000776511967de951a76ef6ac54b0d49ad9a8d593f6aaa909e2.png" />
+<img alt="_images/4e70e1dc74d6cd0f6fccf77e34b33a2f11eebdaf17e5b6e5ca5f7fd5067b164a.png" src="_images/4e70e1dc74d6cd0f6fccf77e34b33a2f11eebdaf17e5b6e5ca5f7fd5067b164a.png" />
+<img alt="_images/fcd3c6bf079440b249a56ded609538741cd633cf7e5050f4436636b8a0123793.png" src="_images/fcd3c6bf079440b249a56ded609538741cd633cf7e5050f4436636b8a0123793.png" />
+<img alt="_images/237d10d20b8e8eb77f081245d421577874650a9e447623e1a7ed1dd4bb77f29a.png" src="_images/237d10d20b8e8eb77f081245d421577874650a9e447623e1a7ed1dd4bb77f29a.png" />
+<img alt="_images/812cb860080b26a4fb879d0a8459e35b90adb0e457c8fd500583a6c298d11747.png" src="_images/812cb860080b26a4fb879d0a8459e35b90adb0e457c8fd500583a6c298d11747.png" />
+<img alt="_images/7821ba3de836d4bd9e3f7840d522f16384cb81b38909a538ece5772f7b953080.png" src="_images/7821ba3de836d4bd9e3f7840d522f16384cb81b38909a538ece5772f7b953080.png" />
+<img alt="_images/b701c11027810ed2aaa9e85ff804940af0956088cbb26d1b2f8e2dc5aff8db19.png" src="_images/b701c11027810ed2aaa9e85ff804940af0956088cbb26d1b2f8e2dc5aff8db19.png" />
+<img alt="_images/7901a29a6568c3488d3f6e0e3ad866633260cf1ba8da2c4a4c39aa8462576f49.png" src="_images/7901a29a6568c3488d3f6e0e3ad866633260cf1ba8da2c4a4c39aa8462576f49.png" />
+<img alt="_images/b8bc23f56340aba940e46360c8e0aebaba51b330274c80a587a9717c79c939ba.png" src="_images/b8bc23f56340aba940e46360c8e0aebaba51b330274c80a587a9717c79c939ba.png" />
+<img alt="_images/2ff25f1721c646bb366605c3161539aea813eb5259c1e4e3426e622038c5c2e2.png" src="_images/2ff25f1721c646bb366605c3161539aea813eb5259c1e4e3426e622038c5c2e2.png" />
 </div>
 </div>
+</section>
+<section id="male-respondents">
+<h3>Male respondents<a class="headerlink" href="#male-respondents" title="Link to this heading">#</a></h3>
+<p>No indications of recent reversals, except <code class="docutils literal notranslate"><span class="pre">fehire</span></code>, which is wonky for everybody.</p>
+<p>Strange pattern in <code class="docutils literal notranslate"><span class="pre">fepol</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">male</span> <span class="o">=</span> <span class="n">gss</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;sex == 1&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plot_series</span><span class="p">(</span><span class="n">male</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Male respondents&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/60406ce35a1f9fc3428de3169194a8f6394dc99d3f2500ab8d8614de0d6396f5.png" src="_images/60406ce35a1f9fc3428de3169194a8f6394dc99d3f2500ab8d8614de0d6396f5.png" />
+<img alt="_images/2919ccaed79b4fdc4d4402028c78e55e54e79daa62dcea9ce64526a6df8b89d1.png" src="_images/2919ccaed79b4fdc4d4402028c78e55e54e79daa62dcea9ce64526a6df8b89d1.png" />
+<img alt="_images/ea80eb75052137275ae91019dd50158dac18ae0e4121362bc6326ba0cdf7445e.png" src="_images/ea80eb75052137275ae91019dd50158dac18ae0e4121362bc6326ba0cdf7445e.png" />
+<img alt="_images/57f6c0dc934f5bad1b021872e38ed4edd1db490f334298ec0a5bfb8fce0d25af.png" src="_images/57f6c0dc934f5bad1b021872e38ed4edd1db490f334298ec0a5bfb8fce0d25af.png" />
+<img alt="_images/14c667065761bded732f3e1d6a452df55560aa2119a413304995176b17bd3a51.png" src="_images/14c667065761bded732f3e1d6a452df55560aa2119a413304995176b17bd3a51.png" />
+<img alt="_images/a5d2719b7b6390128858af632e241ee6b7359507a8b553f343f484392990f48a.png" src="_images/a5d2719b7b6390128858af632e241ee6b7359507a8b553f343f484392990f48a.png" />
+<img alt="_images/a0f89c265837d7a3e2da4083387ec7825ec0ac17147a425122decd7b80677ab8.png" src="_images/a0f89c265837d7a3e2da4083387ec7825ec0ac17147a425122decd7b80677ab8.png" />
+<img alt="_images/0095c9de701e8c937b4f38207b010dd6a76c3c901514100894279f16072aed10.png" src="_images/0095c9de701e8c937b4f38207b010dd6a76c3c901514100894279f16072aed10.png" />
+<img alt="_images/ca0161217e1dfa95806bf9c2d26baecb3b21dcd000acf4f9b9c1080fded3fe9e.png" src="_images/ca0161217e1dfa95806bf9c2d26baecb3b21dcd000acf4f9b9c1080fded3fe9e.png" />
+<img alt="_images/090aa5889a4bfed8120060d36ed00aec3d4efa290f724d7f58644502a72d12ad.png" src="_images/090aa5889a4bfed8120060d36ed00aec3d4efa290f724d7f58644502a72d12ad.png" />
+</div>
+</div>
+</section>
+<section id="young-males">
+<h3>Young males<a class="headerlink" href="#young-males" title="Link to this heading">#</a></h3>
+<p>Noisier series due to smaller sample sizes.</p>
+<p>No indications of reversals that are anything other than random, with the possible exception of <code class="docutils literal notranslate"><span class="pre">fework</span></code> – but I doubt it’s real, and even if it was, it happened in 1990.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">young_male</span> <span class="o">=</span> <span class="n">male</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;age &lt; 30&#39;</span><span class="p">)</span>
@@ -986,18 +1138,19 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/66528a341a5dbf3871f8adfb4df032e143cebf2e989d5fbefafa36837d5ef800.png" src="_images/66528a341a5dbf3871f8adfb4df032e143cebf2e989d5fbefafa36837d5ef800.png" />
+<img alt="_images/855d0211f041c5140e3a821098163286b1a392dc3ed2ff3096a6630d282c2208.png" src="_images/855d0211f041c5140e3a821098163286b1a392dc3ed2ff3096a6630d282c2208.png" />
 <img alt="_images/e2631fff036eb2b34c2618152f94d795bc1be989b8967fbedb8c8b5c21a0eead.png" src="_images/e2631fff036eb2b34c2618152f94d795bc1be989b8967fbedb8c8b5c21a0eead.png" />
 <img alt="_images/bbc7b72b38e0f06db2c6913180830430cee41575bd5153918cbfc57709e5800f.png" src="_images/bbc7b72b38e0f06db2c6913180830430cee41575bd5153918cbfc57709e5800f.png" />
 <img alt="_images/ea4f1f058175f3ce5c20902e7a31e2415253e3a5723988c349aa51ae7a6ea0f9.png" src="_images/ea4f1f058175f3ce5c20902e7a31e2415253e3a5723988c349aa51ae7a6ea0f9.png" />
 <img alt="_images/f925c0b97e1615047f4b1411d472cd5c34125734e7d46bd1d3fccbf63092b479.png" src="_images/f925c0b97e1615047f4b1411d472cd5c34125734e7d46bd1d3fccbf63092b479.png" />
-<img alt="_images/5377db04ac3d95b0dee0412a25c76fce0d0d1c337d5c71e74bc98b34f0a69c1d.png" src="_images/5377db04ac3d95b0dee0412a25c76fce0d0d1c337d5c71e74bc98b34f0a69c1d.png" />
+<img alt="_images/f972de18903b8b13b43834c1be27dd8cbac7cab975e2af08eeb8e9f44eb77e21.png" src="_images/f972de18903b8b13b43834c1be27dd8cbac7cab975e2af08eeb8e9f44eb77e21.png" />
 <img alt="_images/06f60360f92a763cb70f4731d703676db6858b25d6cde787e8d3bb63587c12e7.png" src="_images/06f60360f92a763cb70f4731d703676db6858b25d6cde787e8d3bb63587c12e7.png" />
-<img alt="_images/0cd9266e229990957a737bdbbda8a67d314d307f78ef4a407011777e2a8b8066.png" src="_images/0cd9266e229990957a737bdbbda8a67d314d307f78ef4a407011777e2a8b8066.png" />
+<img alt="_images/43ec31dafd8d0d07bd455f6d38af1bd3a80a642d1f813b7c95c2c05464e621cd.png" src="_images/43ec31dafd8d0d07bd455f6d38af1bd3a80a642d1f813b7c95c2c05464e621cd.png" />
 <img alt="_images/a111a222c8b83a800f9bf9b173e0f4c1c98ee33aaf6c99cc7a2a32f05ce94350.png" src="_images/a111a222c8b83a800f9bf9b173e0f4c1c98ee33aaf6c99cc7a2a32f05ce94350.png" />
-<img alt="_images/921ccc0e6a419312d2344be413f7541b65965a63e6dd013cb6e354ddbb332fa1.png" src="_images/921ccc0e6a419312d2344be413f7541b65965a63e6dd013cb6e354ddbb332fa1.png" />
+<img alt="_images/0c97a4482ea0778b5f71145c7d867aded35c5a2237a584b35201a0e64ca2313e.png" src="_images/0c97a4482ea0778b5f71145c7d867aded35c5a2237a584b35201a0e64ca2313e.png" />
 </div>
 </div>
+</section>
 </section>
 <section id="write-extracts">
 <h2>Write extracts<a class="headerlink" href="#write-extracts" title="Link to this heading">#</a></h2>
@@ -1022,7 +1175,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-rw-r-- 1 downey downey 3.2M May 31 09:19 gss_feminism_2022.hdf
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-rw-r-- 1 downey downey 3.2M May 31 17:36 gss_feminism_2022.hdf
 </pre></div>
 </div>
 </div>
@@ -1048,11 +1201,6 @@ Name: count, dtype: int64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rm: cannot remove &#39;gss_feminism_resampled.hdf&#39;: No such file or directory
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1068,7 +1216,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-rw-r-- 1 downey downey 3.3M May 31 08:59 gss_feminism_resampled.hdf
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-rw-r-- 1 downey downey 3.3M May 31 17:36 gss_feminism_resampled.hdf
 </pre></div>
 </div>
 </div>
@@ -1131,7 +1279,16 @@ Name: count, dtype: int64
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inventory">Inventory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#responses">Responses</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-respondents">All respondents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#female-respondents">Female respondents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#male-respondents">Male respondents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#young-males">Young males</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-extracts">Write extracts</a></li>
 </ul>
   </nav></div>
