@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '01_inventory';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Inference and Gender Gaps" href="02_inference.html" />
     <link rel="prev" title="GssFeminism" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -172,6 +173,7 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_inference.html">Inference and Gender Gaps</a></li>
 </ul>
 
     </div>
@@ -341,6 +343,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#responses">Responses</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-respondents">All respondents</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#female-respondents">Female respondents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#young-females">Young females</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#male-respondents">Male respondents</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#young-males">Young males</a></li>
 </ul>
@@ -1097,6 +1100,32 @@ Name: count, dtype: int64
 </div>
 </div>
 </section>
+<section id="young-females">
+<h3>Young females<a class="headerlink" href="#young-females" title="Link to this heading">#</a></h3>
+<p>Noisier series due to smaller sample sizes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">young_female</span> <span class="o">=</span> <span class="n">female</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;age &lt; 30&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plot_series</span><span class="p">(</span><span class="n">young_female</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Female respondents age &lt; 30&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/37c373ed677faa03104c097e7f5845386aae5260131cce4e07aee2cfb41dcb33.png" src="_images/37c373ed677faa03104c097e7f5845386aae5260131cce4e07aee2cfb41dcb33.png" />
+<img alt="_images/738f3a6035d2b4985d1caf5481f7b0f23aeadfd497199c446b74ce3026a396f0.png" src="_images/738f3a6035d2b4985d1caf5481f7b0f23aeadfd497199c446b74ce3026a396f0.png" />
+<img alt="_images/deeef9e295e09cb28c82e8f33d46543a77020d2641070eb76780284112eee820.png" src="_images/deeef9e295e09cb28c82e8f33d46543a77020d2641070eb76780284112eee820.png" />
+<img alt="_images/08409c958b3865b127e963168ceb05d636992bb28e4cdc3399029a44de7f9c4b.png" src="_images/08409c958b3865b127e963168ceb05d636992bb28e4cdc3399029a44de7f9c4b.png" />
+<img alt="_images/411f8249e36c8e0a5494fbb877e5c6fe54589232a60133db2ba45180354a8eec.png" src="_images/411f8249e36c8e0a5494fbb877e5c6fe54589232a60133db2ba45180354a8eec.png" />
+<img alt="_images/b4dd85b3f96c50dc79e303b200c0296095799ecfafe90ba7dce398d12abe48d8.png" src="_images/b4dd85b3f96c50dc79e303b200c0296095799ecfafe90ba7dce398d12abe48d8.png" />
+<img alt="_images/6bd8ae28c5f78dfe8f2800d3e7b788fb088e298db7557488ba33d793f17a73b7.png" src="_images/6bd8ae28c5f78dfe8f2800d3e7b788fb088e298db7557488ba33d793f17a73b7.png" />
+<img alt="_images/43163e239fb3a02184aacef53a0b54408797a10cebfdd97225836e8f57ff4362.png" src="_images/43163e239fb3a02184aacef53a0b54408797a10cebfdd97225836e8f57ff4362.png" />
+<img alt="_images/0f057fb801427330d0bf50c29579879e3a1288afed3342c3a286bc2a82bdec79.png" src="_images/0f057fb801427330d0bf50c29579879e3a1288afed3342c3a286bc2a82bdec79.png" />
+<img alt="_images/b38b63f168e7fd93d2ad93d65237f88b16f3de045a6ade6781b702eca1e289dc.png" src="_images/b38b63f168e7fd93d2ad93d65237f88b16f3de045a6ade6781b702eca1e289dc.png" />
+</div>
+</div>
+</section>
 <section id="male-respondents">
 <h3>Male respondents<a class="headerlink" href="#male-respondents" title="Link to this heading">#</a></h3>
 <p>No indications of recent reversals, except <code class="docutils literal notranslate"><span class="pre">fehire</span></code>, which is wonky for everybody.</p>
@@ -1175,7 +1204,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-rw-r-- 1 downey downey 3.2M May 31 17:36 gss_feminism_2022.hdf
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-rw-r-- 1 downey downey 3.2M Jun  3 20:35 gss_feminism_2022.hdf
 </pre></div>
 </div>
 </div>
@@ -1216,7 +1245,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-rw-r-- 1 downey downey 3.3M May 31 17:36 gss_feminism_resampled.hdf
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-rw-r-- 1 downey downey 3.3M Jun  3 20:35 gss_feminism_resampled.hdf
 </pre></div>
 </div>
 </div>
@@ -1263,6 +1292,15 @@ Name: count, dtype: int64
         <p class="prev-next-title">GssFeminism</p>
       </div>
     </a>
+    <a class="right-next"
+       href="02_inference.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Inference and Gender Gaps</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1285,6 +1323,7 @@ Name: count, dtype: int64
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#responses">Responses</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-respondents">All respondents</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#female-respondents">Female respondents</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#young-females">Young females</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#male-respondents">Male respondents</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#young-males">Young males</a></li>
 </ul>

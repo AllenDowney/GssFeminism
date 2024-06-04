@@ -1,0 +1,832 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Inference and Gender Gaps &#8212; GSS Feminism</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '02_inference';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Data Inventory" href="01_inventory.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">GSS Feminism</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    GssFeminism
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_inventory.html">Data Inventory</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Inference and Gender Gaps</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/PoliticalAlignmentCaseStudy" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/02_inference.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Inference and Gender Gaps</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling">Resampling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-respondents">All respondents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#young-people">Young people</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="inference-and-gender-gaps">
+<h1>Inference and Gender Gaps<a class="headerlink" href="#inference-and-gender-gaps" title="Link to this heading">#</a></h1>
+<p>Allen Downey</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/MIT_License">MIT License</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gss</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="s1">&#39;gss_feminism_2022.hdf&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;gss&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the 10 <code class="docutils literal notranslate"><span class="pre">fe</span></code> variables and the text of the questions.</p>
+<p><code class="docutils literal notranslate"><span class="pre">fechld</span></code></p>
+<blockquote>
+<div><p>A. A working mother can establish just as warm and secure a relationship with her children as a mother who does not work.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fefam</span></code></p>
+<blockquote>
+<div><p>D. It is much better for everyone involved if the man is the achiever outside the home and the woman takes care of the home and family.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fehelp</span></code></p>
+<blockquote>
+<div><p>B. It is more important for a wife to help her husband’s career than to have one herself.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fehire</span></code></p>
+<blockquote>
+<div><p>Because of past discrimination, employers should make special efforts to hire and promote qualified women.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fehome</span></code></p>
+<blockquote>
+<div><p>Women should take care of running their homes and leave running the country up to men.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fejobaff</span></code></p>
+<blockquote>
+<div><p>Some people say that because of past discrimination, women should be given preference in hiring and promotion. Others say that such preference in hiring and promotion of women is wrong because it discriminates against men. What about your opinion - are you for or against preferential hiring and promotion of women?
+IF FOR:Do you favor preference in hiring and promotion strongly or not strongly?
+IF AGAINST:Do you oppose preference in hiring and promotion strongly or not strongly?</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fepol</span></code></p>
+<blockquote>
+<div><p>A. Tell me if you agree or disagree with this statement:  Most men are better suited emotionally for politics than are most women.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fepres</span></code></p>
+<blockquote>
+<div><p>If your party nominated a woman for President, would you vote for her if she were qualified for the job?</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fepresch</span></code></p>
+<blockquote>
+<div><p>C. A preschool child is likely to suffer if his or her mother works.</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">fework</span></code></p>
+<blockquote>
+<div><p>Do you approve or disapprove of a married woman earning money in business or industry if she has a husband capable of supporting her?</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fe_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gss</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;fe&#39;</span><span class="p">)]</span>
+<span class="n">fe_columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;fechld&#39;,
+ &#39;fefam&#39;,
+ &#39;fehelp&#39;,
+ &#39;fehire&#39;,
+ &#39;fehome&#39;,
+ &#39;fejobaff&#39;,
+ &#39;fepol&#39;,
+ &#39;fepres&#39;,
+ &#39;fepresch&#39;,
+ &#39;fework&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">decorate</span>
+
+<span class="n">grouped</span> <span class="o">=</span> <span class="n">gss</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>
+<span class="n">intervals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="s1">&#39;last&#39;</span><span class="p">,</span> <span class="s1">&#39;# years&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">grouped</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="n">nonzero</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">n_years</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nonzero</span><span class="p">)</span>
+    <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">nonzero</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">nonzero</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">intervals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">n_years</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intervals</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first</th>
+      <th>last</th>
+      <th># years</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>fechld</th>
+      <td>1977</td>
+      <td>2022</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>fefam</th>
+      <td>1977</td>
+      <td>2022</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>fehelp</th>
+      <td>1977</td>
+      <td>1998</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>fehire</th>
+      <td>1996</td>
+      <td>2022</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>fehome</th>
+      <td>1974</td>
+      <td>1998</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>fejobaff</th>
+      <td>1996</td>
+      <td>2022</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>fepol</th>
+      <td>1974</td>
+      <td>2022</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>fepres</th>
+      <td>1972</td>
+      <td>2010</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>fepresch</th>
+      <td>1977</td>
+      <td>2022</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>fework</th>
+      <td>1972</td>
+      <td>1998</td>
+      <td>17</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>For each variable, I’ll select “agree” and “strongly agree”, except for <code class="docutils literal notranslate"><span class="pre">fework</span></code>, where I’ve selected “approve”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agree_responses</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;fechld&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="s1">&#39;fefam&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="s1">&#39;fehelp&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="s1">&#39;fehire&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="s1">&#39;fehome&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="s1">&#39;fejobaff&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="s1">&#39;fepol&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="s1">&#39;fepres&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="s1">&#39;fepresch&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="s1">&#39;fework&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="resampling">
+<h2>Resampling<a class="headerlink" href="#resampling" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">resample_by_year</span></code> uses weighted bootstrap resampling to simultaneously correct for stratified sampling and estimate error bounds on a year-by year basis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">resample_by_year</span>
+
+<span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">resample_by_year</span><span class="p">(</span><span class="n">gss</span><span class="p">,</span> <span class="s2">&quot;wtssall&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">101</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="n">xtab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+    <span class="n">series</span> <span class="o">=</span> <span class="n">xtab</span><span class="p">[</span><span class="n">agree_responses</span><span class="p">[</span><span class="n">column</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">series</span> <span class="o">*</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">plot_percentiles</span></code> plots the median of the resampled estimates as a line and a 90% confidence interval as a shaded area.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">percentile_rows</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">ps</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes percentiles from aligned series.</span>
+
+<span class="sd">    series_seq: list of sequences</span>
+<span class="sd">    ps: cumulative probabilities</span>
+
+<span class="sd">    returns: Series of x-values, NumPy array with selected rows</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">nrows</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="n">ps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">ps</span> <span class="o">*</span> <span class="n">nrows</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">xs</span><span class="p">,</span> <span class="n">rows</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_percentiles</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">ps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot the low, median, and high percentiles.</span>
+
+<span class="sd">    series_seq: sequence of Series</span>
+<span class="sd">    ps: percentiles to use for low, medium and high</span>
+<span class="sd">    label: string label for the median line</span>
+<span class="sd">    options: options passed plt.plot and plt.fill_between</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">ps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="n">xs</span><span class="p">,</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">percentile_rows</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">ps</span><span class="p">)</span>
+    <span class="n">low</span><span class="p">,</span> <span class="n">med</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">rows</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">med</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_series_bounds</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">query1</span><span class="p">,</span> <span class="n">query2</span><span class="p">):</span>
+    <span class="n">male_series_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_series</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">query1</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> 
+                       <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]</span>
+    <span class="n">female_series_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_series</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">query2</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> 
+                         <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]</span>
+    <span class="n">plot_percentiles</span><span class="p">(</span><span class="n">male_series_seq</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;male&#39;</span><span class="p">)</span>
+    <span class="n">plot_percentiles</span><span class="p">(</span><span class="n">female_series_seq</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;female&#39;</span><span class="p">)</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Percent agree/approve&#39;</span><span class="p">,</span> 
+             <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1971</span><span class="p">,</span> <span class="mi">2023</span><span class="p">],</span>
+             <span class="n">title</span><span class="o">=</span><span class="n">column</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="all-respondents">
+<h2>All respondents<a class="headerlink" href="#all-respondents" title="Link to this heading">#</a></h2>
+<p>Because the sample sizes are large, the confidence intervals are generally small.</p>
+<p>But the variation from year to year is pretty noisy – it’s hard to believe beliefs and attitudes actually change that much. This is a general pattern in GSS and similar datasets. I have not seen people discuss it. My best guess is that the answers get moved around by short-term period effects, like whatever is being discussed in the media during the observation period.</p>
+<p>Anyway, some observations:</p>
+<ul class="simple">
+<li><p>Some questions show non-negligible gender gaps, but several of them have none.</p></li>
+<li><p>No evidence of long-term expansion of gender gaps – in fact, a few have converged.</p></li>
+<li><p>A couple of questions show a possible expansion in the 2021 and 2022 surveys, but several of the questions in 2021 are weird enough that I have doubts about their validity – especially fehire.</p></li>
+<li><p>The two questions where there might be something happening are <code class="docutils literal notranslate"><span class="pre">fehire</span></code> and <code class="docutils literal notranslate"><span class="pre">fejobaff</span></code> – exactly the places where there might be something legitimate to disagree about.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plot_series_bounds</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="s1">&#39;sex==1&#39;</span><span class="p">,</span> <span class="s1">&#39;sex==2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/003094f0ecefeacf443b41e0cc27487309f1c048f835f596f559a135de170cf9.png" src="_images/003094f0ecefeacf443b41e0cc27487309f1c048f835f596f559a135de170cf9.png" />
+<img alt="_images/1df482b32bf637a10a5d787c816464cff03d27a37ac08a6ecc0b3a3c1604ad70.png" src="_images/1df482b32bf637a10a5d787c816464cff03d27a37ac08a6ecc0b3a3c1604ad70.png" />
+<img alt="_images/46b4326d26202a86c350697e503bb55085df3a93468bbe1d76858ee6990e46ed.png" src="_images/46b4326d26202a86c350697e503bb55085df3a93468bbe1d76858ee6990e46ed.png" />
+<img alt="_images/da0a22c10ca6b24ec59ebf324cf456be4477d0494619cc33a70090f26e27922f.png" src="_images/da0a22c10ca6b24ec59ebf324cf456be4477d0494619cc33a70090f26e27922f.png" />
+<img alt="_images/2ef12df9a0764622e495982c08c05e6c0d1d67566b6683e6c26580c4ba1ed06b.png" src="_images/2ef12df9a0764622e495982c08c05e6c0d1d67566b6683e6c26580c4ba1ed06b.png" />
+<img alt="_images/54da6e3e9d72d6a1bd1f0a411d32f99e16e37dfc0818bf8b29acd92b225a8dc6.png" src="_images/54da6e3e9d72d6a1bd1f0a411d32f99e16e37dfc0818bf8b29acd92b225a8dc6.png" />
+<img alt="_images/045d5a8eff7c3e42b9e9cd1c4e36eeb878c4bed8dd222849caf6708133ba8d80.png" src="_images/045d5a8eff7c3e42b9e9cd1c4e36eeb878c4bed8dd222849caf6708133ba8d80.png" />
+<img alt="_images/6679f039092c5fb3cbd78b3961648800017b9f36a244d986559afc9b27d76f67.png" src="_images/6679f039092c5fb3cbd78b3961648800017b9f36a244d986559afc9b27d76f67.png" />
+<img alt="_images/58f513313cd4495143f281a2aa253eb27ee8d38a752e2a69122bcec7429ccf1e.png" src="_images/58f513313cd4495143f281a2aa253eb27ee8d38a752e2a69122bcec7429ccf1e.png" />
+<img alt="_images/d7480d5a976c91fa3586e4080f62e980da28dbd2b28b68365d22d931c9176061.png" src="_images/d7480d5a976c91fa3586e4080f62e980da28dbd2b28b68365d22d931c9176061.png" />
+</div>
+</div>
+</section>
+<section id="young-people">
+<h2>Young people<a class="headerlink" href="#young-people" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Again, when we select people under 30, we have smaller sample sizes, so the series are noisier.</p></li>
+<li><p>For almost all questions, there is no statistically significant gender gap, no evidence of a growing gap, and no evidence of recent reversals that we can distinguish from noise.</p></li>
+<li><p>The only possible exceptions are <code class="docutils literal notranslate"><span class="pre">fehire</span></code> and <code class="docutils literal notranslate"><span class="pre">fejobaff</span></code> again, and maybe <code class="docutils literal notranslate"><span class="pre">fefam</span></code> (but I don’t think any of them would survive statistical tests)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plot_series_bounds</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="s1">&#39;sex==1 &amp; age&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;sex==2 &amp; age&lt;30&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/679267c60245a974f5f825ee54fbee5cfcd8e4bd55824278772ee66d74c08a4d.png" src="_images/679267c60245a974f5f825ee54fbee5cfcd8e4bd55824278772ee66d74c08a4d.png" />
+<img alt="_images/4ef672404f47710acee6330ec74220d127eb129c187dd6d5741574aee3928f4b.png" src="_images/4ef672404f47710acee6330ec74220d127eb129c187dd6d5741574aee3928f4b.png" />
+<img alt="_images/f5d38302f629c608182b3bcad55951f47a430a70eeee6e604603cb3652bf2700.png" src="_images/f5d38302f629c608182b3bcad55951f47a430a70eeee6e604603cb3652bf2700.png" />
+<img alt="_images/8c874481748d91ab76e9309c5b31f8f33c49cdb612ae295565acd5da0d81820d.png" src="_images/8c874481748d91ab76e9309c5b31f8f33c49cdb612ae295565acd5da0d81820d.png" />
+<img alt="_images/0848abb9097b827ac0ec65ae3465280ee63ec50b1af8302e4fdcf96eed82464a.png" src="_images/0848abb9097b827ac0ec65ae3465280ee63ec50b1af8302e4fdcf96eed82464a.png" />
+<img alt="_images/1818704732632a72a4324813cbca234376c69d9e256bff80cc260504497153a1.png" src="_images/1818704732632a72a4324813cbca234376c69d9e256bff80cc260504497153a1.png" />
+<img alt="_images/1ded8d41a6da249fe7af7fce9868e0c8ea99e258242565d5ba5dc7a18e20b56d.png" src="_images/1ded8d41a6da249fe7af7fce9868e0c8ea99e258242565d5ba5dc7a18e20b56d.png" />
+<img alt="_images/5fc4bfb8fd2553be337d7fea75cc52cfbb625a9fb95b7630452570f543cc337a.png" src="_images/5fc4bfb8fd2553be337d7fea75cc52cfbb625a9fb95b7630452570f543cc337a.png" />
+<img alt="_images/8c186162f4474a772738ed08ec56e5cc3c520ce3e58416a17df32962e9127d7e.png" src="_images/8c186162f4474a772738ed08ec56e5cc3c520ce3e58416a17df32962e9127d7e.png" />
+<img alt="_images/1204bfcdac24738efd9a73ea64248e2a5dbd75df038b9b41c110dc4d79bd07ac.png" src="_images/1204bfcdac24738efd9a73ea64248e2a5dbd75df038b9b41c110dc4d79bd07ac.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_inventory.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data Inventory</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling">Resampling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-respondents">All respondents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#young-people">Young people</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
