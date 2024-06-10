@@ -57,11 +57,10 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '02_inference';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '03_viz';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Inference and Gender Gaps" href="03_viz.html" />
-    <link rel="prev" title="Data Inventory" href="01_inventory.html" />
+    <link rel="prev" title="Inference and Gender Gaps" href="02_inference.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -173,8 +172,8 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_inventory.html">Data Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_inference.html">Inference and Gender Gaps</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Inference and Gender Gaps</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_viz.html">Inference and Gender Gaps</a></li>
 </ul>
 
     </div>
@@ -244,7 +243,7 @@
       
       
       
-      <li><a href="_sources/02_inference.ipynb" target="_blank"
+      <li><a href="_sources/03_viz.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -339,9 +338,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling">Resampling</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-respondents">All respondents</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#young-people">Young people</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#old-people">“Old” people</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-without-smoothing">Plot without smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-with-smoothing">Plot with smoothing</a></li>
 </ul>
             </nav>
         </div>
@@ -550,6 +548,20 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </table>
 </div></div></div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">current_columns</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;last==2022&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+<span class="n">current_columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;fechld&#39;, &#39;fefam&#39;, &#39;fehire&#39;, &#39;fejobaff&#39;, &#39;fepol&#39;, &#39;fepresch&#39;],
+      dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
 <p>For each variable, I’ll select “agree” and “strongly agree”, except for <code class="docutils literal notranslate"><span class="pre">fework</span></code>, where I’ve selected “approve”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -576,6 +588,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">resample_by_year</span>
 
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>
 <span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">resample_by_year</span><span class="p">(</span><span class="n">gss</span><span class="p">,</span> <span class="s2">&quot;wtssall&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">101</span><span class="p">)]</span>
 </pre></div>
 </div>
@@ -588,6 +601,20 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
     <span class="n">xtab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
     <span class="n">series</span> <span class="o">=</span> <span class="n">xtab</span><span class="p">[</span><span class="n">agree_responses</span><span class="p">[</span><span class="n">column</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">series</span> <span class="o">*</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">make_lowess</span>
+
+<span class="k">def</span> <span class="nf">make_smooth_series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="n">xtab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+    <span class="n">series</span> <span class="o">=</span> <span class="n">xtab</span><span class="p">[</span><span class="n">agree_responses</span><span class="p">[</span><span class="n">column</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">smooth</span> <span class="o">=</span> <span class="n">make_lowess</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">smooth</span> <span class="o">*</span> <span class="mi">100</span>
 </pre></div>
 </div>
 </div>
@@ -622,15 +649,20 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
     <span class="n">ps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">95</span><span class="p">]</span>
     <span class="n">xs</span> <span class="o">=</span> <span class="n">series_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
     <span class="n">low</span><span class="p">,</span> <span class="n">med</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">percentile_rows</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">ps</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">med</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">med</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">adjust_map</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">column</span><span class="p">,</span> <span class="n">label</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">med</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">offset</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_median</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_median</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot the low, median, and high percentiles.</span>
 
 <span class="sd">    series_seq: sequence of Series</span>
@@ -638,10 +670,15 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <span class="sd">    label: string label for the median line</span>
 <span class="sd">    options: options passed plt.plot and plt.fill_between</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
     <span class="n">xs</span> <span class="o">=</span> <span class="n">series_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
     <span class="n">med</span> <span class="o">=</span> <span class="n">percentile_rows</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">med</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">adjust_map</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">column</span><span class="p">,</span> <span class="n">label</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">med</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">offset</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -664,109 +701,238 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_four_series</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_four_series</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">queries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sex==1 &amp; age&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;sex==1 &amp; age&gt;=30&#39;</span><span class="p">,</span> 
                <span class="s1">&#39;sex==2 &amp; age&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;sex==2 &amp; age&gt;=30&#39;</span><span class="p">]</span>
     <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">]</span>
     <span class="n">styles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">]</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Male &lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;Male &gt;=30&#39;</span><span class="p">,</span> <span class="s1">&#39;Female &lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;Female &gt;=30&#39;</span><span class="p">]</span>
+    <span class="n">short_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;M&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;M≥30&#39;</span><span class="p">,</span> <span class="s1">&#39;F&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;F≥30&#39;</span><span class="p">]</span>
+    <span class="n">long_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Male &lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;Male ≥30&#39;</span><span class="p">,</span> <span class="s1">&#39;Female &lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;Female ≥30&#39;</span><span class="p">]</span>
     
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">query</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">queries</span><span class="p">):</span>
-        <span class="n">series_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_series</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> 
-                       <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]</span>
-        <span class="n">plot_median</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    
-    <span class="n">decorate</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Percent agree/approve&#39;</span><span class="p">,</span> 
-             <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1971</span><span class="p">,</span> <span class="mi">2023</span><span class="p">],</span>
-             <span class="n">title</span><span class="o">=</span><span class="n">column</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">smooth</span><span class="p">:</span>
+            <span class="n">series_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_smooth_series</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> 
+                          <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">series_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_series</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> 
+                          <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]</span>
+            
+        <span class="n">options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">short_labels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">bounds</span><span class="p">:</span>
+            <span class="n">plot_percentiles</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plot_median</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+            
+    <span class="n">decorate</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Percent agree&#39;</span><span class="p">,</span> 
+             <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1971</span><span class="p">,</span> <span class="mi">2023</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="all-respondents">
-<h2>All respondents<a class="headerlink" href="#all-respondents" title="Link to this heading">#</a></h2>
-<p>Because the sample sizes are large, the confidence intervals are generally small.</p>
-<p>But the variation from year to year is pretty noisy – it’s hard to believe beliefs and attitudes actually change that much. This is a general pattern in GSS and similar datasets. I have not seen people discuss it. My best guess is that the answers get moved around by short-term period effects, like whatever is being discussed in the media during the observation period.</p>
-<p>Anyway, some observations:</p>
-<ul class="simple">
-<li><p>Some questions show non-negligible gender gaps, but several of them have none.</p></li>
-<li><p>No evidence of long-term expansion of gender gaps – in fact, a few have converged.</p></li>
-<li><p>A couple of questions show a possible expansion in the 2021 and 2022 surveys, but several of the questions in 2021 are weird enough that I have doubts about their validity – especially fehire.</p></li>
-<li><p>The two questions where there might be something happening are <code class="docutils literal notranslate"><span class="pre">fehire</span></code> and <code class="docutils literal notranslate"><span class="pre">fejobaff</span></code> – exactly the places where there might be something legitimate to disagree about.</p></li>
-</ul>
+<section id="plot-without-smoothing">
+<h2>Plot without smoothing<a class="headerlink" href="#plot-without-smoothing" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="n">plot_series_bounds</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="s1">&#39;sex==1&#39;</span><span class="p">,</span> <span class="s1">&#39;sex==2&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adjust_map</span> <span class="o">=</span> <span class="p">{(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="s1">&#39;M&lt;30&#39;</span><span class="p">):</span> <span class="o">-</span><span class="mf">1.3</span><span class="p">,</span>
+              <span class="p">(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="s1">&#39;M≥30&#39;</span><span class="p">):</span> <span class="o">-</span><span class="mf">0.65</span><span class="p">,</span>
+              <span class="p">(</span><span class="s1">&#39;fepol&#39;</span><span class="p">,</span> <span class="s1">&#39;F≥30&#39;</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span>
+             <span class="p">}</span>
+
+<span class="n">smooth</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;A working mother can establish just as warm and secure a</span>
+<span class="s2">relationship with her children as a mother who does not work</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fechld&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d2d87214624532ec39f33115b83b723fb019b4381df0ee83c1af92da09367a87.png" src="_images/d2d87214624532ec39f33115b83b723fb019b4381df0ee83c1af92da09367a87.png" />
-<img alt="_images/40f2e16283fc92239c4241b2c96cccaca6415f7815480e9143e37738a213bfbd.png" src="_images/40f2e16283fc92239c4241b2c96cccaca6415f7815480e9143e37738a213bfbd.png" />
-<img alt="_images/9078c5161453a1b0dc1ce993c7d313e77a13eb3cc7910916a2688a178f2ac70d.png" src="_images/9078c5161453a1b0dc1ce993c7d313e77a13eb3cc7910916a2688a178f2ac70d.png" />
-<img alt="_images/ed85d4b6e0c99b98568e62f7298411bfb0f5b191f82e51bddeac37b88353850f.png" src="_images/ed85d4b6e0c99b98568e62f7298411bfb0f5b191f82e51bddeac37b88353850f.png" />
-<img alt="_images/bf2598cb9b2ea528cc52f4625a28be479f4892224ccb8d0932d0ae9bb7987c1d.png" src="_images/bf2598cb9b2ea528cc52f4625a28be479f4892224ccb8d0932d0ae9bb7987c1d.png" />
-<img alt="_images/39b95189b3185ac908ba1ea31fc5d3868c8f50436823159983b5a003e8ae84ff.png" src="_images/39b95189b3185ac908ba1ea31fc5d3868c8f50436823159983b5a003e8ae84ff.png" />
-<img alt="_images/e0904fe064dc0a4d52a4a0bb88d96d276ddcf738ace1e4cc84d95df3cb049830.png" src="_images/e0904fe064dc0a4d52a4a0bb88d96d276ddcf738ace1e4cc84d95df3cb049830.png" />
-<img alt="_images/decd2e8500b931ef7271dab9270cb70f3f30a9da9ce9eba506b3951c15c89c49.png" src="_images/decd2e8500b931ef7271dab9270cb70f3f30a9da9ce9eba506b3951c15c89c49.png" />
-<img alt="_images/87d190ad78d7824272ce3813d3d312f5ba6a6330f2bb876600ea31c3318943ec.png" src="_images/87d190ad78d7824272ce3813d3d312f5ba6a6330f2bb876600ea31c3318943ec.png" />
-<img alt="_images/2e6c0cc0b6895286391d179ed6035e6dc5f03cce0e0eec227b026775854f7915.png" src="_images/2e6c0cc0b6895286391d179ed6035e6dc5f03cce0e0eec227b026775854f7915.png" />
+<img alt="_images/258226a0ef90371668813d41ca1900b966ad1272332f996d146f7060ffcf4965.png" src="_images/258226a0ef90371668813d41ca1900b966ad1272332f996d146f7060ffcf4965.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;It is much better for everyone involved if the man is the achiever </span>
+<span class="s2">outside the home and the woman takes care of the home and family</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fefam&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1c6a9c0b529533f724b34529e8ef5f1a0e261f66d353c4dca9cf145d10a264c1.png" src="_images/1c6a9c0b529533f724b34529e8ef5f1a0e261f66d353c4dca9cf145d10a264c1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Because of past discrimination, employers should make </span>
+<span class="s2">special efforts to hire and promote qualified women</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fehire&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b1f67d477cfa1d2591e5a462053b65b2fb688209165264eeb0cce5ed4e51182a.png" src="_images/b1f67d477cfa1d2591e5a462053b65b2fb688209165264eeb0cce5ed4e51182a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Some people say that because of past discrimination, </span>
+<span class="s2">women should be given preference in hiring and promotion. </span>
+<span class="s2">Others say that such preference in hiring and promotion of </span>
+<span class="s2">women  is wrong because it discriminates against men. </span>
+<span class="s2">What about your opinion - are you for or against </span>
+<span class="s2">preferential hiring and promotion of women?</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Percent in favor&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/60519272682ecf11ca077854c69e817dd17e80f52479435f665ece2b726ca176.png" src="_images/60519272682ecf11ca077854c69e817dd17e80f52479435f665ece2b726ca176.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Most men are better suited emotionally</span>
+<span class="s2">for politics than are most women</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fepol&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">1968</span><span class="p">,</span> <span class="mi">2023</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6d7a8c02e21ec9262cc0e018f964eb66e297203559ce88e2ff7d579e28559783.png" src="_images/6d7a8c02e21ec9262cc0e018f964eb66e297203559ce88e2ff7d579e28559783.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;A preschool child is likely to suffer if his or her mother works</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fepresch&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/678796b50b05692be12b1c5d8360bff8e1da992900f3dfe2dc22a3a3638b4929.png" src="_images/678796b50b05692be12b1c5d8360bff8e1da992900f3dfe2dc22a3a3638b4929.png" />
 </div>
 </div>
 </section>
-<section id="young-people">
-<h2>Young people<a class="headerlink" href="#young-people" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Again, when we select people under 30, we have smaller sample sizes, so the series are noisier.</p></li>
-<li><p>For almost all questions, there is no statistically significant gender gap, no evidence of a growing gap, and no evidence of recent reversals that we can distinguish from noise.</p></li>
-<li><p>The only possible exceptions are <code class="docutils literal notranslate"><span class="pre">fehire</span></code> and <code class="docutils literal notranslate"><span class="pre">fejobaff</span></code> again, and maybe <code class="docutils literal notranslate"><span class="pre">fefam</span></code> (but I don’t think any of them would survive statistical tests)</p></li>
-</ul>
+<section id="plot-with-smoothing">
+<h2>Plot with smoothing<a class="headerlink" href="#plot-with-smoothing" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="n">plot_series_bounds</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="s1">&#39;sex==1 &amp; age&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;sex==2 &amp; age&lt;30&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adjust_map</span> <span class="o">=</span> <span class="p">{(</span><span class="s1">&#39;fepresch&#39;</span><span class="p">,</span> <span class="s1">&#39;F≥30&#39;</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span>
+             <span class="p">}</span>
+
+<span class="n">smooth</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;A working mother can establish just as warm and secure a</span>
+<span class="s2">relationship with her children as a mother who does not work</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fechld&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/65b21b2e36f3514437e4f55b96f8f48cb6057ec141fedc7f0c68528acbf704fe.png" src="_images/65b21b2e36f3514437e4f55b96f8f48cb6057ec141fedc7f0c68528acbf704fe.png" />
-<img alt="_images/94b08112f3ace5b4b44b6c610192bdc2fc8dfddced496e67c7de3ac2b88f871e.png" src="_images/94b08112f3ace5b4b44b6c610192bdc2fc8dfddced496e67c7de3ac2b88f871e.png" />
-<img alt="_images/9c058ea1e4ad4a7c25a53597d262a705a5b5175341916d9e504757d9ca6b62b5.png" src="_images/9c058ea1e4ad4a7c25a53597d262a705a5b5175341916d9e504757d9ca6b62b5.png" />
-<img alt="_images/525833bcf9adddd46f4bc7a65a4d7a900d9844c759194793537d39f2d6b9987d.png" src="_images/525833bcf9adddd46f4bc7a65a4d7a900d9844c759194793537d39f2d6b9987d.png" />
-<img alt="_images/b3e38d2ca63503e58757a1261e63a041a53a2f3f15a3404eb9ccb62572c76116.png" src="_images/b3e38d2ca63503e58757a1261e63a041a53a2f3f15a3404eb9ccb62572c76116.png" />
-<img alt="_images/83b21a63e894974231b71130a33b2cc9b658c9b0a6511c0f0bbc28c46ab27f45.png" src="_images/83b21a63e894974231b71130a33b2cc9b658c9b0a6511c0f0bbc28c46ab27f45.png" />
-<img alt="_images/b178bf59c2bb9d0116ac2ea243b15e44281d61701a7f0f1dc6a629fa8384a4d7.png" src="_images/b178bf59c2bb9d0116ac2ea243b15e44281d61701a7f0f1dc6a629fa8384a4d7.png" />
-<img alt="_images/f99b6de6d0b607399389dc2143f2b142d04219a01cc03fc84d64146deb3ba847.png" src="_images/f99b6de6d0b607399389dc2143f2b142d04219a01cc03fc84d64146deb3ba847.png" />
-<img alt="_images/0b9364b3eff1f11d6836203a2f584761b5c005e518b135a0d215ebaeef470373.png" src="_images/0b9364b3eff1f11d6836203a2f584761b5c005e518b135a0d215ebaeef470373.png" />
-<img alt="_images/a0e7b34d16fd2965055e979f927f222b5dec24c83119070bf8c9973cd6f7a234.png" src="_images/a0e7b34d16fd2965055e979f927f222b5dec24c83119070bf8c9973cd6f7a234.png" />
+<img alt="_images/d3fad87548888e30cdd921434b2e9d3dbf59e9ca09cc401eb15d0eedf4f067db.png" src="_images/d3fad87548888e30cdd921434b2e9d3dbf59e9ca09cc401eb15d0eedf4f067db.png" />
 </div>
 </div>
-</section>
-<section id="old-people">
-<h2>“Old” people<a class="headerlink" href="#old-people" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">fe_columns</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="n">plot_series_bounds</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="s1">&#39;sex==1 &amp; age&gt;=30&#39;</span><span class="p">,</span> <span class="s1">&#39;sex==2 &amp; age&gt;=30&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;It is much better for everyone involved if the man is the achiever </span>
+<span class="s2">outside the home and the woman takes care of the home and family</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fefam&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c7d8d9c63ac674a5ac4ffacdcfedd26c5723724dd2fb38746404250d08a26e1c.png" src="_images/c7d8d9c63ac674a5ac4ffacdcfedd26c5723724dd2fb38746404250d08a26e1c.png" />
-<img alt="_images/696400dd24e32846770d902fe556e9600b1979e4246424a32d08aaabae7234ae.png" src="_images/696400dd24e32846770d902fe556e9600b1979e4246424a32d08aaabae7234ae.png" />
-<img alt="_images/72b99b5143ed2eb03b4825fe6d48cad97bc949e3a2679028d5faff7ddc2b4032.png" src="_images/72b99b5143ed2eb03b4825fe6d48cad97bc949e3a2679028d5faff7ddc2b4032.png" />
-<img alt="_images/f335e14b5ce7b1c7f6861213b163c642e80c8705dab092adcf4954635a25d175.png" src="_images/f335e14b5ce7b1c7f6861213b163c642e80c8705dab092adcf4954635a25d175.png" />
-<img alt="_images/31ba19400a99ff58dee9dd051d17fab463b689876b344028a48559a81501eed0.png" src="_images/31ba19400a99ff58dee9dd051d17fab463b689876b344028a48559a81501eed0.png" />
-<img alt="_images/2482de775b137152316b29eae2550742300f0046cd1095b17e9dff4b9a9703b0.png" src="_images/2482de775b137152316b29eae2550742300f0046cd1095b17e9dff4b9a9703b0.png" />
-<img alt="_images/6a6ce469c460612cc5f63ba0de5bbce11999eb8f791e00b90187a9a08328cc14.png" src="_images/6a6ce469c460612cc5f63ba0de5bbce11999eb8f791e00b90187a9a08328cc14.png" />
-<img alt="_images/78ba49a60fae15ef96415f40ebb77c3dd8ebfebea8bbf6deacdcdbcd7125d4d6.png" src="_images/78ba49a60fae15ef96415f40ebb77c3dd8ebfebea8bbf6deacdcdbcd7125d4d6.png" />
-<img alt="_images/79cf46fcc8c3515d6f887bff6b1ea7acfe30ac8e9bd23e410c4e616118caa4c0.png" src="_images/79cf46fcc8c3515d6f887bff6b1ea7acfe30ac8e9bd23e410c4e616118caa4c0.png" />
-<img alt="_images/353b75007b39102dfa65b904d921d33ee894095b8e2cc6eaf6ca17033f264ba6.png" src="_images/353b75007b39102dfa65b904d921d33ee894095b8e2cc6eaf6ca17033f264ba6.png" />
+<img alt="_images/26d4cc9c4b13d0911417654b011c42bb47473969f0a23069a8c753656e5ae81c.png" src="_images/26d4cc9c4b13d0911417654b011c42bb47473969f0a23069a8c753656e5ae81c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Because of past discrimination, employers should make </span>
+<span class="s2">special efforts to hire and promote qualified women</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fehire&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5990a2116488f79a4a08c0bcf7b0beed1f7572058058df417d4e0db839d0090d.png" src="_images/5990a2116488f79a4a08c0bcf7b0beed1f7572058058df417d4e0db839d0090d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Some people say that because of past discrimination, </span>
+<span class="s2">women should be given preference in hiring and promotion. </span>
+<span class="s2">Others say that such preference in hiring and promotion of </span>
+<span class="s2">women  is wrong because it discriminates against men. </span>
+<span class="s2">What about your opinion - are you for or against </span>
+<span class="s2">preferential hiring and promotion of women?</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Percent in favor&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/81116ea7b6834127e2e365235612269d8d1720b68cfd2863294b3059d9c4629f.png" src="_images/81116ea7b6834127e2e365235612269d8d1720b68cfd2863294b3059d9c4629f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Most men are better suited emotionally</span>
+<span class="s2">for politics than are most women</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fepol&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">1968</span><span class="p">,</span> <span class="mi">2023</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ef38e58765618a8efe84a0a8a18704ee13ff33ca5bf55f8a914d5fe1f9445d7b.png" src="_images/ef38e58765618a8efe84a0a8a18704ee13ff33ca5bf55f8a914d5fe1f9445d7b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;A preschool child is likely to suffer if his or her mother works</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fepresch&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b12d5a2d8802f9682d72f3d31e870a5b196385a6bc7707dabe8f209e4a3195b1.png" src="_images/b12d5a2d8802f9682d72f3d31e870a5b196385a6bc7707dabe8f209e4a3195b1.png" />
 </div>
 </div>
 </section>
@@ -803,22 +969,13 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="01_inventory.html"
+       href="02_inference.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Data Inventory</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="03_viz.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Inference and Gender Gaps</p>
       </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -837,9 +994,8 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling">Resampling</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-respondents">All respondents</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#young-people">Young people</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#old-people">“Old” people</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-without-smoothing">Plot without smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-with-smoothing">Plot with smoothing</a></li>
 </ul>
   </nav></div>
 
