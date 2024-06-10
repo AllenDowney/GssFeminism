@@ -620,12 +620,17 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">label</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">ls</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;ls&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
     <span class="n">series</span> <span class="o">=</span> <span class="n">make_series_weighted</span><span class="p">(</span><span class="n">gss</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">smooth</span><span class="p">:</span>
-        <span class="n">series</span> <span class="o">=</span> <span class="n">make_lowess</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
-        
-    <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">series</span><span class="o">.</span><span class="n">values</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="s1">&#39;M&lt;30&#39;</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">series</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">smooth</span> <span class="o">=</span> <span class="n">make_lowess</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+        <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">smooth</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">smooth</span><span class="o">.</span><span class="n">values</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">series</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">ls</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
 
     <span class="n">offset</span> <span class="o">=</span> <span class="n">adjust_map</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">column</span><span class="p">,</span> <span class="n">label</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span>
@@ -674,7 +679,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c34a28f64cb4d2ff2270a476e336201061d6debc6e0fe1d8f3d994787be280fb.png" src="_images/c34a28f64cb4d2ff2270a476e336201061d6debc6e0fe1d8f3d994787be280fb.png" />
+<img alt="_images/4e85493b0c50f98991ae339b142d3b6e2e4eec3e19dbf632bfd0b16d423d5372.png" src="_images/4e85493b0c50f98991ae339b142d3b6e2e4eec3e19dbf632bfd0b16d423d5372.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -688,7 +693,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/234d6b25d24fd1366e93b4ec1d7806fec8596fcf2fe275d9bb74c461dd42731b.png" src="_images/234d6b25d24fd1366e93b4ec1d7806fec8596fcf2fe275d9bb74c461dd42731b.png" />
+<img alt="_images/bff92f4433165b4d85913eb9a18edd432f74cb02aa6196e750f084f452b3aa58.png" src="_images/bff92f4433165b4d85913eb9a18edd432f74cb02aa6196e750f084f452b3aa58.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -702,7 +707,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/c54400fed5dd631a2ad9521a10a1742ef0ec2616af5098456567bd34a2465a03.png" src="_images/c54400fed5dd631a2ad9521a10a1742ef0ec2616af5098456567bd34a2465a03.png" />
+<img alt="_images/ff709d62614cd0a432698844d7abcc76efefc6dd3cc7e9b089aea08ad831510f.png" src="_images/ff709d62614cd0a432698844d7abcc76efefc6dd3cc7e9b089aea08ad831510f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -721,7 +726,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b86aa0fb6ccd5de5fd19eebbe7a30f9e78c9dccfa3688d8abd627318a2790714.png" src="_images/b86aa0fb6ccd5de5fd19eebbe7a30f9e78c9dccfa3688d8abd627318a2790714.png" />
+<img alt="_images/0e1b28a84deeaaa8ac6fde40431ae26dbf72be46b01a84362e589a55d2ac2937.png" src="_images/0e1b28a84deeaaa8ac6fde40431ae26dbf72be46b01a84362e589a55d2ac2937.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -736,7 +741,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9b40a15afdbb1f0dfbb78f77c7b0ab7da3404e0c46c9cd083e24c58347d5bc8b.png" src="_images/9b40a15afdbb1f0dfbb78f77c7b0ab7da3404e0c46c9cd083e24c58347d5bc8b.png" />
+<img alt="_images/daed0fcab3a965ec249546cb3e10c3f479aed361921a61f7714451afc9e6766e.png" src="_images/daed0fcab3a965ec249546cb3e10c3f479aed361921a61f7714451afc9e6766e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -749,7 +754,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7b07e86e9c70cc620944414d25979d88469f623d57d4095b82770f590a276969.png" src="_images/7b07e86e9c70cc620944414d25979d88469f623d57d4095b82770f590a276969.png" />
+<img alt="_images/5ee38465552a19aa7f8f96600a9fa85c41bcd80ca7d48813383521fd592615cd.png" src="_images/5ee38465552a19aa7f8f96600a9fa85c41bcd80ca7d48813383521fd592615cd.png" />
 </div>
 </div>
 </section>
@@ -778,7 +783,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7f7fcdb93387bda1d7ce5f68be4ae5107a26a44cc3bbb545fa564c0f1dc0e178.png" src="_images/7f7fcdb93387bda1d7ce5f68be4ae5107a26a44cc3bbb545fa564c0f1dc0e178.png" />
+<img alt="_images/51e630fc51f3f99278529c6d2cf566599f0dbeecf1ce626ec528e949e31e21a3.png" src="_images/51e630fc51f3f99278529c6d2cf566599f0dbeecf1ce626ec528e949e31e21a3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -792,7 +797,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04da28310535a5e751a2d3ccf59f5629b91c05901416e64a8223070d27fba5f2.png" src="_images/04da28310535a5e751a2d3ccf59f5629b91c05901416e64a8223070d27fba5f2.png" />
+<img alt="_images/74c0f03750aaa940dfb5db7132b97cfafb96451482f701056b72b0e6b0a05e33.png" src="_images/74c0f03750aaa940dfb5db7132b97cfafb96451482f701056b72b0e6b0a05e33.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -806,7 +811,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/42a8561172250f000418b5db160c8c4ed77fcd4d900f63a4a30a341c279d0a39.png" src="_images/42a8561172250f000418b5db160c8c4ed77fcd4d900f63a4a30a341c279d0a39.png" />
+<img alt="_images/c4a3a963ff006649839406707d55be6f6bf483840c0ebb4d588c3d85c66de67d.png" src="_images/c4a3a963ff006649839406707d55be6f6bf483840c0ebb4d588c3d85c66de67d.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -825,7 +830,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9ccefe4ea3bb0c97f4d3a27a0ac61afc565cd03cb21dc79881952a08caec4b00.png" src="_images/9ccefe4ea3bb0c97f4d3a27a0ac61afc565cd03cb21dc79881952a08caec4b00.png" />
+<img alt="_images/0b5d0a5545dc75a488f6be538886c2afad507e57b3d7ab7b2c328b8595805586.png" src="_images/0b5d0a5545dc75a488f6be538886c2afad507e57b3d7ab7b2c328b8595805586.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -840,7 +845,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e9bb4d126b18a7bfa401ed88314175f7aaf03b3f8727231ae425f8b64eafe43c.png" src="_images/e9bb4d126b18a7bfa401ed88314175f7aaf03b3f8727231ae425f8b64eafe43c.png" />
+<img alt="_images/a545f03e08bd48ff156f87d56a0cf16dcc26fb82991bb0d763e906ba7029c7a7.png" src="_images/a545f03e08bd48ff156f87d56a0cf16dcc26fb82991bb0d763e906ba7029c7a7.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -853,7 +858,7 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b621ede593d62da189e4aab8a4bcc11c106f46733e51c82f0c46d8045e4732d1.png" src="_images/b621ede593d62da189e4aab8a4bcc11c106f46733e51c82f0c46d8045e4732d1.png" />
+<img alt="_images/1b8c6e236c404e9f76f084cb2bf189827ed803b840e3b98f4808aea9e4217c45.png" src="_images/1b8c6e236c404e9f76f084cb2bf189827ed803b840e3b98f4808aea9e4217c45.png" />
 </div>
 </div>
 </section>
