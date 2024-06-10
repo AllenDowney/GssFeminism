@@ -57,11 +57,10 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '03_viz';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '04_weighted';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Inference and Gender Gaps" href="04_weighted.html" />
-    <link rel="prev" title="Inference and Gender Gaps" href="02_inference.html" />
+    <link rel="prev" title="Inference and Gender Gaps" href="03_viz.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -174,8 +173,8 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_inventory.html">Data Inventory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_inference.html">Inference and Gender Gaps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_viz.html">Inference and Gender Gaps</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Inference and Gender Gaps</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_weighted.html">Inference and Gender Gaps</a></li>
 </ul>
 
     </div>
@@ -245,7 +244,7 @@
       
       
       
-      <li><a href="_sources/03_viz.ipynb" target="_blank"
+      <li><a href="_sources/04_weighted.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -339,7 +338,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling">Resampling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-without-smoothing">Plot without smoothing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-with-smoothing">Plot with smoothing</a></li>
 </ul>
@@ -583,26 +581,33 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 </div>
-<section id="resampling">
-<h2>Resampling<a class="headerlink" href="#resampling" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">resample_by_year</span></code> uses weighted bootstrap resampling to simultaneously correct for stratified sampling and estimate error bounds on a year-by year basis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">resample_by_year</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_series_weighted</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">weighted_fraction</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
+        <span class="n">responses</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">agree_responses</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;wtssall&#39;</span><span class="p">]</span>
+        <span class="n">fraction</span> <span class="o">=</span> <span class="p">(</span><span class="n">responses</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">fraction</span>
 
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">resample_by_year</span><span class="p">(</span><span class="n">gss</span><span class="p">,</span> <span class="s2">&quot;wtssall&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">101</span><span class="p">)]</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="n">column</span><span class="p">,</span> <span class="s1">&#39;wtssall&#39;</span><span class="p">])</span>
+    <span class="n">series</span> <span class="o">=</span> <span class="n">subset</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">weighted_fraction</span><span class="p">,</span> <span class="n">include_groups</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">series</span> <span class="o">*</span> <span class="mi">100</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
-    <span class="n">subset</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-    <span class="n">xtab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">subset</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
-    <span class="n">series</span> <span class="o">=</span> <span class="n">xtab</span><span class="p">[</span><span class="n">agree_responses</span><span class="p">[</span><span class="n">column</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">series</span> <span class="o">*</span> <span class="mi">100</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">queries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sex==1 &amp; age&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;sex==1 &amp; age&gt;=30&#39;</span><span class="p">,</span> 
+           <span class="s1">&#39;sex==2 &amp; age&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;sex==2 &amp; age&gt;=30&#39;</span><span class="p">]</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">]</span>
+<span class="n">styles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">]</span>
+<span class="n">short_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;M&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;M≥30&#39;</span><span class="p">,</span> <span class="s1">&#39;F&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;F≥30&#39;</span><span class="p">]</span>
+<span class="n">long_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Male &lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;Male ≥30&#39;</span><span class="p">,</span> <span class="s1">&#39;Female &lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;Female ≥30&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -611,50 +616,20 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">make_lowess</span>
 
-<span class="k">def</span> <span class="nf">make_smooth_series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
-    <span class="n">series</span> <span class="o">=</span> <span class="n">make_series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
-    <span class="n">smooth</span> <span class="o">=</span> <span class="n">make_lowess</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">smooth</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">plot_percentiles</span></code> plots the median of the resampled estimates as a line and a 90% confidence interval as a shaded area.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">percentile_rows</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">ps</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes percentiles from aligned series.</span>
-
-<span class="sd">    series_seq: list of sequences</span>
-<span class="sd">    ps: cumulative probabilities</span>
-
-<span class="sd">    returns: NumPy array</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">series_seq</span><span class="p">)</span>
-    <span class="n">rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">ps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">rows</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_percentiles</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">ps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot the low, median, and high percentiles.</span>
-
-<span class="sd">    series_seq: sequence of Series</span>
-<span class="sd">    options: options passed plt.plot and plt.fill_between</span>
+<span class="k">def</span> <span class="nf">plot_weighted</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">label</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">ps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">95</span><span class="p">]</span>
-    <span class="n">xs</span> <span class="o">=</span> <span class="n">series_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
-    <span class="n">low</span><span class="p">,</span> <span class="n">med</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">percentile_rows</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">ps</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">med</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
-    
+    <span class="n">series</span> <span class="o">=</span> <span class="n">make_series_weighted</span><span class="p">(</span><span class="n">gss</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">smooth</span><span class="p">:</span>
+        <span class="n">series</span> <span class="o">=</span> <span class="n">make_lowess</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+        
+    <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">series</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+
     <span class="n">offset</span> <span class="o">=</span> <span class="n">adjust_map</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">column</span><span class="p">,</span> <span class="n">label</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">med</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">offset</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">ys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">offset</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -662,66 +637,10 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_median</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot the low, median, and high percentiles.</span>
-
-<span class="sd">    series_seq: sequence of Series</span>
-<span class="sd">    ps: percentiles to use for low, medium and high</span>
-<span class="sd">    label: string label for the median line</span>
-<span class="sd">    options: options passed plt.plot and plt.fill_between</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">xs</span> <span class="o">=</span> <span class="n">series_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
-    <span class="n">med</span> <span class="o">=</span> <span class="n">percentile_rows</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">med</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
-
-    <span class="n">offset</span> <span class="o">=</span> <span class="n">adjust_map</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">column</span><span class="p">,</span> <span class="n">label</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">med</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">offset</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_series_bounds</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">query1</span><span class="p">,</span> <span class="n">query2</span><span class="p">):</span>
-    <span class="n">male_series_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_series</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">query1</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> 
-                       <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]</span>
-    <span class="n">female_series_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_series</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">query2</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> 
-                         <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]</span>
-    <span class="n">plot_percentiles</span><span class="p">(</span><span class="n">male_series_seq</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;male&#39;</span><span class="p">)</span>
-    <span class="n">plot_percentiles</span><span class="p">(</span><span class="n">female_series_seq</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;female&#39;</span><span class="p">)</span>
-    <span class="n">decorate</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Percent agree/approve&#39;</span><span class="p">,</span> 
-             <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1971</span><span class="p">,</span> <span class="mi">2023</span><span class="p">],</span>
-             <span class="n">title</span><span class="o">=</span><span class="n">column</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_four_series</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="n">queries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sex==1 &amp; age&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;sex==1 &amp; age&gt;=30&#39;</span><span class="p">,</span> 
-               <span class="s1">&#39;sex==2 &amp; age&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;sex==2 &amp; age&gt;=30&#39;</span><span class="p">]</span>
-    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">]</span>
-    <span class="n">styles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">]</span>
-    <span class="n">short_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;M&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;M≥30&#39;</span><span class="p">,</span> <span class="s1">&#39;F&lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;F≥30&#39;</span><span class="p">]</span>
-    <span class="n">long_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Male &lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;Male ≥30&#39;</span><span class="p">,</span> <span class="s1">&#39;Female &lt;30&#39;</span><span class="p">,</span> <span class="s1">&#39;Female ≥30&#39;</span><span class="p">]</span>
-    
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_four_series_weighted</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">query</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">queries</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">smooth</span><span class="p">:</span>
-            <span class="n">series_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_smooth_series</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> 
-                          <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">series_seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_series</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span> 
-                          <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]</span>
-            
         <span class="n">options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="n">styles</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">short_labels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">bounds</span><span class="p">:</span>
-            <span class="n">plot_percentiles</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">plot_median</span><span class="p">(</span><span class="n">series_seq</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">plot_weighted</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">smooth</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
             
     <span class="n">decorate</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Percent agree&#39;</span><span class="p">,</span> 
              <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1971</span><span class="p">,</span> <span class="mi">2023</span><span class="p">])</span>
@@ -729,14 +648,14 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 </div>
 </div>
 </div>
-</section>
 <section id="plot-without-smoothing">
 <h2>Plot without smoothing<a class="headerlink" href="#plot-without-smoothing" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adjust_map</span> <span class="o">=</span> <span class="p">{(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="s1">&#39;M&lt;30&#39;</span><span class="p">):</span> <span class="o">-</span><span class="mf">1.3</span><span class="p">,</span>
-              <span class="p">(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="s1">&#39;M≥30&#39;</span><span class="p">):</span> <span class="o">-</span><span class="mf">0.65</span><span class="p">,</span>
+              <span class="p">(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="s1">&#39;M≥30&#39;</span><span class="p">):</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span>
               <span class="p">(</span><span class="s1">&#39;fepol&#39;</span><span class="p">,</span> <span class="s1">&#39;F≥30&#39;</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span>
+             <span class="p">(</span><span class="s1">&#39;fehire&#39;</span><span class="p">,</span> <span class="s1">&#39;F≥30&#39;</span><span class="p">):</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
              <span class="p">}</span>
 
 <span class="n">smooth</span> <span class="o">=</span> <span class="kc">False</span>
@@ -749,13 +668,13 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;A working mother can establish just as warm and secure a</span>
 <span class="s2">relationship with her children as a mother who does not work</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fechld&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fechld&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/258226a0ef90371668813d41ca1900b966ad1272332f996d146f7060ffcf4965.png" src="_images/258226a0ef90371668813d41ca1900b966ad1272332f996d146f7060ffcf4965.png" />
+<img alt="_images/c34a28f64cb4d2ff2270a476e336201061d6debc6e0fe1d8f3d994787be280fb.png" src="_images/c34a28f64cb4d2ff2270a476e336201061d6debc6e0fe1d8f3d994787be280fb.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -763,13 +682,13 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;It is much better for everyone involved if the man is the achiever </span>
 <span class="s2">outside the home and the woman takes care of the home and family</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fefam&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fefam&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/1c6a9c0b529533f724b34529e8ef5f1a0e261f66d353c4dca9cf145d10a264c1.png" src="_images/1c6a9c0b529533f724b34529e8ef5f1a0e261f66d353c4dca9cf145d10a264c1.png" />
+<img alt="_images/234d6b25d24fd1366e93b4ec1d7806fec8596fcf2fe275d9bb74c461dd42731b.png" src="_images/234d6b25d24fd1366e93b4ec1d7806fec8596fcf2fe275d9bb74c461dd42731b.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -777,13 +696,13 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Because of past discrimination, employers should make </span>
 <span class="s2">special efforts to hire and promote qualified women</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fehire&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fehire&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b1f67d477cfa1d2591e5a462053b65b2fb688209165264eeb0cce5ed4e51182a.png" src="_images/b1f67d477cfa1d2591e5a462053b65b2fb688209165264eeb0cce5ed4e51182a.png" />
+<img alt="_images/c54400fed5dd631a2ad9521a10a1742ef0ec2616af5098456567bd34a2465a03.png" src="_images/c54400fed5dd631a2ad9521a10a1742ef0ec2616af5098456567bd34a2465a03.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -795,14 +714,14 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <span class="s2">What about your opinion - are you for or against </span>
 <span class="s2">preferential hiring and promotion of women?</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Percent in favor&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/60519272682ecf11ca077854c69e817dd17e80f52479435f665ece2b726ca176.png" src="_images/60519272682ecf11ca077854c69e817dd17e80f52479435f665ece2b726ca176.png" />
+<img alt="_images/b86aa0fb6ccd5de5fd19eebbe7a30f9e78c9dccfa3688d8abd627318a2790714.png" src="_images/b86aa0fb6ccd5de5fd19eebbe7a30f9e78c9dccfa3688d8abd627318a2790714.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -810,27 +729,27 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Most men are better suited emotionally</span>
 <span class="s2">for politics than are most women</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fepol&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fepol&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">1968</span><span class="p">,</span> <span class="mi">2023</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6d7a8c02e21ec9262cc0e018f964eb66e297203559ce88e2ff7d579e28559783.png" src="_images/6d7a8c02e21ec9262cc0e018f964eb66e297203559ce88e2ff7d579e28559783.png" />
+<img alt="_images/9b40a15afdbb1f0dfbb78f77c7b0ab7da3404e0c46c9cd083e24c58347d5bc8b.png" src="_images/9b40a15afdbb1f0dfbb78f77c7b0ab7da3404e0c46c9cd083e24c58347d5bc8b.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;A preschool child is likely to suffer if his or her mother works</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fepresch&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fepresch&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/678796b50b05692be12b1c5d8360bff8e1da992900f3dfe2dc22a3a3638b4929.png" src="_images/678796b50b05692be12b1c5d8360bff8e1da992900f3dfe2dc22a3a3638b4929.png" />
+<img alt="_images/7b07e86e9c70cc620944414d25979d88469f623d57d4095b82770f590a276969.png" src="_images/7b07e86e9c70cc620944414d25979d88469f623d57d4095b82770f590a276969.png" />
 </div>
 </div>
 </section>
@@ -838,7 +757,9 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <h2>Plot with smoothing<a class="headerlink" href="#plot-with-smoothing" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adjust_map</span> <span class="o">=</span> <span class="p">{(</span><span class="s1">&#39;fepresch&#39;</span><span class="p">,</span> <span class="s1">&#39;F≥30&#39;</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adjust_map</span> <span class="o">=</span> <span class="p">{(</span><span class="s1">&#39;fepresch&#39;</span><span class="p">,</span> <span class="s1">&#39;F≥30&#39;</span><span class="p">):</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+             <span class="p">(</span><span class="s1">&#39;fepresch&#39;</span><span class="p">,</span> <span class="s1">&#39;M&lt;30&#39;</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span>
+             <span class="p">(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="s1">&#39;M&lt;30&#39;</span><span class="p">):</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>
              <span class="p">}</span>
 
 <span class="n">smooth</span> <span class="o">=</span> <span class="kc">True</span>
@@ -851,13 +772,13 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;A working mother can establish just as warm and secure a</span>
 <span class="s2">relationship with her children as a mother who does not work</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fechld&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fechld&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d3fad87548888e30cdd921434b2e9d3dbf59e9ca09cc401eb15d0eedf4f067db.png" src="_images/d3fad87548888e30cdd921434b2e9d3dbf59e9ca09cc401eb15d0eedf4f067db.png" />
+<img alt="_images/7f7fcdb93387bda1d7ce5f68be4ae5107a26a44cc3bbb545fa564c0f1dc0e178.png" src="_images/7f7fcdb93387bda1d7ce5f68be4ae5107a26a44cc3bbb545fa564c0f1dc0e178.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -865,13 +786,13 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;It is much better for everyone involved if the man is the achiever </span>
 <span class="s2">outside the home and the woman takes care of the home and family</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fefam&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fefam&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/26d4cc9c4b13d0911417654b011c42bb47473969f0a23069a8c753656e5ae81c.png" src="_images/26d4cc9c4b13d0911417654b011c42bb47473969f0a23069a8c753656e5ae81c.png" />
+<img alt="_images/04da28310535a5e751a2d3ccf59f5629b91c05901416e64a8223070d27fba5f2.png" src="_images/04da28310535a5e751a2d3ccf59f5629b91c05901416e64a8223070d27fba5f2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -879,13 +800,13 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Because of past discrimination, employers should make </span>
 <span class="s2">special efforts to hire and promote qualified women</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fehire&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fehire&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5990a2116488f79a4a08c0bcf7b0beed1f7572058058df417d4e0db839d0090d.png" src="_images/5990a2116488f79a4a08c0bcf7b0beed1f7572058058df417d4e0db839d0090d.png" />
+<img alt="_images/42a8561172250f000418b5db160c8c4ed77fcd4d900f63a4a30a341c279d0a39.png" src="_images/42a8561172250f000418b5db160c8c4ed77fcd4d900f63a4a30a341c279d0a39.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -897,14 +818,14 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <span class="s2">What about your opinion - are you for or against </span>
 <span class="s2">preferential hiring and promotion of women?</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fejobaff&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Percent in favor&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/81116ea7b6834127e2e365235612269d8d1720b68cfd2863294b3059d9c4629f.png" src="_images/81116ea7b6834127e2e365235612269d8d1720b68cfd2863294b3059d9c4629f.png" />
+<img alt="_images/9ccefe4ea3bb0c97f4d3a27a0ac61afc565cd03cb21dc79881952a08caec4b00.png" src="_images/9ccefe4ea3bb0c97f4d3a27a0ac61afc565cd03cb21dc79881952a08caec4b00.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -912,27 +833,27 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Most men are better suited emotionally</span>
 <span class="s2">for politics than are most women</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fepol&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fepol&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">1968</span><span class="p">,</span> <span class="mi">2023</span><span class="p">]);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ef38e58765618a8efe84a0a8a18704ee13ff33ca5bf55f8a914d5fe1f9445d7b.png" src="_images/ef38e58765618a8efe84a0a8a18704ee13ff33ca5bf55f8a914d5fe1f9445d7b.png" />
+<img alt="_images/e9bb4d126b18a7bfa401ed88314175f7aaf03b3f8727231ae425f8b64eafe43c.png" src="_images/e9bb4d126b18a7bfa401ed88314175f7aaf03b3f8727231ae425f8b64eafe43c.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;A preschool child is likely to suffer if his or her mother works</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="n">plot_four_series</span><span class="p">(</span><span class="s1">&#39;fepresch&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
+<span class="n">plot_four_series_weighted</span><span class="p">(</span><span class="s1">&#39;fepresch&#39;</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b12d5a2d8802f9682d72f3d31e870a5b196385a6bc7707dabe8f209e4a3195b1.png" src="_images/b12d5a2d8802f9682d72f3d31e870a5b196385a6bc7707dabe8f209e4a3195b1.png" />
+<img alt="_images/b621ede593d62da189e4aab8a4bcc11c106f46733e51c82f0c46d8045e4732d1.png" src="_images/b621ede593d62da189e4aab8a4bcc11c106f46733e51c82f0c46d8045e4732d1.png" />
 </div>
 </div>
 </section>
@@ -969,22 +890,13 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="02_inference.html"
+       href="03_viz.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Inference and Gender Gaps</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="04_weighted.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Inference and Gender Gaps</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -1002,7 +914,6 @@ IF AGAINST:Do you oppose preference in hiring and promotion strongly or not stro
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling">Resampling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-without-smoothing">Plot without smoothing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-with-smoothing">Plot with smoothing</a></li>
 </ul>
